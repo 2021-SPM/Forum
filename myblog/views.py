@@ -1,9 +1,11 @@
 import re
 
 import markdown
+from django.contrib import messages
 from django.db.models import Q
+from django.db.models.aggregates import Count
 from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse_lazy
 from django.utils.text import slugify
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
@@ -16,10 +18,12 @@ from .models import Post, Category
 class HomeView(ListView):
     model = Post
     template_name = 'home.html'
-    ordering = ['-post_date']
+    ordering = ['-views']
 
     def get_context_data(self, *args, **kwargs):
         context = super(HomeView, self).get_context_data(*args, **kwargs)
+        category_list = Category.objects.annotate(posts_num=Count('post')).order_by('-posts_num')
+        context['category_list'] = category_list
         return context
 
 
@@ -29,7 +33,6 @@ class ArticleDetailView(DetailView):
 
     def get_context_data(self, *args, **kwargs):
         context = super(ArticleDetailView, self).get_context_data(*args, **kwargs)
-
         post = get_object_or_404(Post, id=self.kwargs['pk'])
         post.increase_views()
         md = markdown.Markdown(extensions=[
@@ -60,6 +63,7 @@ class AddPostView(CreateView):
     model = Post
     form_class = PostForm
     template_name = 'add_post.html'
+    success_url = reverse_lazy('home')
 
 
 class UpdatePostView(UpdateView):
@@ -81,8 +85,8 @@ class CategoryView(ListView):
     context_object_name = 'post_list'
 
     def get_queryset(self):
-        cat = get_object_or_404(Category, pk=self.kwargs.get('pk'))
-        return super(CategoryView, self).get_queryset().filter(category=cat)
+        cate = get_object_or_404(Category, pk=self.kwargs.get('pk'))
+        return super(CategoryView, self).get_queryset().filter(category=cate)
 
 
 class AddCatView(CreateView):
@@ -104,15 +108,12 @@ def LikeView(request, pk):
     return HttpResponseRedirect(reverse_lazy('article_detail', args=[str(pk)]))
 
 
-from django.contrib import messages
-
-
 def search(request):
     q = request.GET.get('q')
 
     if not q:
-        error_msg = "😱"
-        messages.add_message(request, messages.ERROR, error_msg)
+        messages.add_message(request, messages.ERROR, "😱，搜索出错惹", extra_tags='danger')
         return redirect('home')
-    post_list = Post.objects.filter(Q(title__icontains=q) | Q(body__icontains=q))
+    post_list = Post.objects.filter(Q(title__icontains=q) | Q(body__icontains=q) | Q(author__username__icontains=q))
+    messages.add_message(request, messages.SUCCESS, "φ(゜▽゜*)♪", extra_tags='success')
     return render(request, 'home.html', {'post_list': post_list})
