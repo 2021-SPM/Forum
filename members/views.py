@@ -4,7 +4,7 @@ from django.urls import reverse_lazy
 from django.views import generic
 from django.views.generic import DetailView, CreateView
 
-from myblog.models import Profile
+from myblog.models import Profile, Post
 from .forms import SignUpForm, EditProfileForm, PasswordChangingForm, ProfilePageForm
 
 
@@ -43,7 +43,9 @@ class ShowProfilePageView(DetailView):
         # users = Profile.objects.all()
         context = super(ShowProfilePageView, self).get_context_data(**kwargs)
         page_user = get_object_or_404(Profile, id=self.kwargs['pk'])
+        posts = Post.objects.filter(author=page_user.user_id)
         context['page_user'] = page_user
+        context['posts'] = posts
         return context
 
 

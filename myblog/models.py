@@ -2,6 +2,18 @@ from ckeditor.fields import RichTextField
 from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
+from django.utils import timezone
+
+
+class Category(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return str(self.name)
+
+
+class Tag(models.Model):
+    name = models.CharField(max_length=100)
 
 
 class Profile(models.Model):
@@ -22,12 +34,15 @@ class Profile(models.Model):
 class Post(models.Model):
     title = models.CharField(max_length=255)
     header_image = models.ImageField(blank=True, null=True, upload_to='article/%Y%m%d/')
-    snippet = models.CharField(max_length=255)
+    snippet = models.CharField(max_length=255, blank=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     body = RichTextField(blank=True, null=True)
-    post_date = models.DateField(auto_now_add=True)
+    post_date = models.DateField(default=timezone.now)
+    modified_date = models.DateField(auto_now_add=True)
     likes = models.ManyToManyField(User, related_name='blog_posts')
     views = models.PositiveIntegerField(default=0)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    tags = models.ManyToManyField(Tag, blank=True)
 
     def increase_views(self):
         self.views += 1
@@ -41,3 +56,7 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         return reverse('article_detail', args=(str(self.id)))
+
+    def save(self, *args, **kwargs):
+        self.modified_date = timezone.now()
+        super().save(*args, **kwargs)
