@@ -1,3 +1,51 @@
+#### Git的简单使用方法
+
+1. 在本地新建一个空的文件夹，任意命名
+
+2. 打开终端程序，进入此文件夹目录
+
+3. 在终端运行如下命令
+
+   ```bash
+   $ git init
+   ```
+
+   ```bash
+   $ git remote add origin https://github.com/2021-SPM/Forum.git
+   ```
+
+   ```bash
+   $ git config --global user.email "你的邮箱"
+   ```
+
+   ```bash
+   $ git config --global user.name "用户名"
+   ```
+
+   ```bash
+   $ git pull --rebase origin master
+   ```
+
+   等待下载完成...
+
+4. 这样在本地就会有一个完整的git仓库了
+
+5. 在本地进行修改之后运行如下命令
+
+   ```bash
+   $ git add .
+   ```
+
+   ```bash
+   $ git commit -m "写点注释"
+   ```
+
+   ```bash
+   $ git push origin master
+   ```
+
+   完成提交
+
 #### Forum - Release 3
 
 ##### 更新
