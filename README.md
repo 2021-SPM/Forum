@@ -1,4 +1,4 @@
-#### Git的简单使用方法
+####  Git的简单使用方法
 
 1. 在本地新建一个空的文件夹，任意命名
 
@@ -7,22 +7,31 @@
 3. 在终端运行如下命令
 
    ```bash
-   $ git init
+   //创建git仓库
+   $ git init 
    ```
 
    ```bash
+   //添加基本信息
+   $ git config --global user.email 邮箱 
+   ```
+
+   ```bash
+   $ git config --global user.name 用户名
+   ```
+
+   ```bash
+   //创建一个分支，避免直接提交到master
+   $ git branch -m 你的分支的名字 e.g. git branch -m liuruixuan 
+   ```
+
+   ```bash
+   //添加远程仓库
    $ git remote add origin https://github.com/2021-SPM/Forum.git
    ```
 
    ```bash
-   $ git config --global user.email "你的邮箱"
-   ```
-
-   ```bash
-   $ git config --global user.name "用户名"
-   ```
-
-   ```bash
+   //拉取仓库中master分支的内容
    $ git pull --rebase origin master
    ```
 
@@ -33,18 +42,23 @@
 5. 在本地进行修改之后运行如下命令
 
    ```bash
+   //添加所有修改的文件
    $ git add .
    ```
 
    ```bash
+   //干了点啥
    $ git commit -m "写点注释"
    ```
 
    ```bash
-   $ git push origin master
+   //提交到github仓库
+   $ git push origin 你的分支的名字
    ```
 
    完成提交
+
+   
 
 #### Forum - Release 3
 
