@@ -2,7 +2,7 @@
 {% load comments_extras %}
 {% load static %}
 {% block title %}
-    {{ post.snippet }}
+{{ post.snippet }}
 {% endblock %}
 
 <head>
@@ -12,21 +12,21 @@
 </head>
 {% block content %}
 
-    <body>
+<body>
     <div class="container">
 
         <div class="row">
             <div class="col-9">
-                <h1>{{ post.title }}<br/></h1>
+                <h1>{{ post.title }}<br /></h1>
                 <h3><em>{{ post.snippet }}</em></h3>
                 <h3><em>Category: {{ post.category.name }}</em></h3>
                 <div class="card mb-2">
                     <div class="row g-1">
                         <div class="col-md-4">
                             {% if post.author.profile.profile_pic %}
-                                <img src="{{ post.author.profile.profile_pic.url }}" class="rounded-circle">
+                            <img src="{{ post.author.profile.profile_pic.url }}" class="rounded-circle">
                             {% else %}
-                                <img src="{% static 'myblog/images/default_profile.png' %}" class="rounded-circle"
+                            <img src="{% static 'myblog/images/default_profile.png' %}" class="rounded-circle">
                             {% endif %}
                         </div>
                         <div class="col-md-8">
@@ -34,16 +34,16 @@
                                 <h5 class="card-title">{{ post.author.first_name }} {{ post.author.last_name }}</h5>
                                 <p class="small text-muted">
                                     {% if post.author.profile.id %}
-                                        <a href="{% url 'show_profile_page' post.author.profile.id %}">Profile Page</a>
+                                    <a href="{% url 'members:show_profile_page' post.author.profile.id %}">Profile Page</a>
                                     {% endif %}
                                     {% if post.author.profile.website_url %}
-                                        | <a href="{{ post.author.profile.website_url }}">Website</a>
+                                    | <a href="{{ post.author.profile.website_url }}">Website</a>
                                     {% endif %}
                                     {% if post.author.profile.weibo_url %}
-                                        | <a href="{{ post.author.profile.weibo_url }}">Weibo</a>
+                                    | <a href="{{ post.author.profile.weibo_url }}">Weibo</a>
                                     {% endif %}
                                     {% if post.author.profile.twitter_url %} |
-                                        | <a href="{{ post.author.profile.twitter_url }}">Twitter</a>
+                                    | <a href="{{ post.author.profile.twitter_url }}">Twitter</a>
                                     {% endif %}
                                 </p>
                                 <p class="card-text">{{ post.author.profile.bio }}</p>
@@ -53,30 +53,25 @@
                 </div>
                 <div>
                     {% if post.header_image %}
-                        <img src="{{ post.header_image.url }}" class="img-fluid" style="width: 100%"><br/>
+                    <img src="{{ post.header_image.url }}" class="img-fluid" style="width: 100%"><br />
                     {% endif %}
                     <small><b>Posted: {{ post.post_date }} | Likes: {{ total_likes }} |
-                        Views: {{ post.views }}</b></small><br/>
+                            Views: {{ post.views }}</b></small><br />
                     <div>
                         {% if user.is_authenticated %}
-                            {% if user.id == post.author.id %}
-                                <a href="{% url 'update_post' post.pk %}">编辑文章</a>
-                                <a href="{% url 'delete_post' post.pk %}">删除文章</a>
-                            {% endif %}
-                            </div>
+                        {% if user.id == post.author.id %}
+                        <a href="{% url 'myblog:update_post' post.pk %}">编辑文章</a>
+                        <a href="{% url 'myblog:delete_post' post.pk %}">删除文章</a>
                         {% endif %}
-                </div>
-            </div>
-                {% if toc %}
-                    <div class="col-3 mt-4">
-                        <h4 class="widget-title">Menu</h4>
-                        {{ toc | safe }}
                     </div>
-                {% endif %}
+                    {% endif %}
+                </div>
+
+            </div>
         </div>
     </div>
     <div>
-        <br/><br/>
+        <br /><br />
 
         <div class="container">
             {{ body | safe }}
@@ -84,16 +79,16 @@
     </div>
     <hr>
     <div>
-        <form action="{% url 'like_post' post.pk %}" method="post">
+        <form action="{% url 'myblog:like_post' post.pk %}" method="post">
             {% csrf_token %}
             {% if user.is_authenticated %}
-                {% if liked %}
-                    <button type="submit" name="post_id" value="{{ post.id }}" class="btn btn-danger">Unlike
-                    </button>
-                {% else %}
-                    <button type="submit" name="post_id" value="{{ post.id }}" class="btn btn-dark"> like</button>
-                {% endif %}
-                <hr>
+            {% if liked %}
+            <button type="submit" name="post_id" value="{{ post.id }}" class="btn btn-danger">Unlike
+            </button>
+            {% else %}
+            <button type="submit" name="post_id" value="{{ post.id }}" class="btn btn-dark"> like</button>
+            {% endif %}
+            <hr>
             {% endif %}
         </form>
     </div>
@@ -101,17 +96,17 @@
     <h3>发表评论</h3>
     <div class="comment-list-panel">
         {% if user.is_authenticated %}
-            {% show_comment_form post %}
+        {% show_comment_form post %}
         {% else %}
-            <div align="center"><strong>请<a href="{% url 'login' %}">登陆</a>后回复</strong></div>
-            <br/><br/><br/>
+        <div align="center"><strong>请<a href="{% url 'login' %}">登陆</a>后回复</strong></div>
+        <br /><br /><br />
         {% endif %}
         {% show_comments post %}
         <hr>
     </div>
     <div>
-        <a class="btn btn-dark" href="{% url 'home' %}">Back</a>
+        <a class="btn btn-dark" href="{% url 'myblog:home' %}">Back</a>
     </div>
 
-    </body>
+</body>
 {% endblock %}

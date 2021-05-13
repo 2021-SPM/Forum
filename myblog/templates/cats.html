@@ -10,9 +10,9 @@
         {% for post in post_list %}
             <div class="card mb-3">
                 <div class="card-body">
-                    <h4 class="card-title"><a href="{% url 'article_detail' post.pk %}">{{ post.title }}</a></h4>
+                    <h4 class="card-title"><a href="{% url 'myblog:article_detail' post.pk %}">{{ post.title }}</a></h4>
                     <p class="card-text">{% if post.author.profile.id %}
-                        <a href="{% url 'show_profile_page' post.author.profile.id %}">{{ post.author.username }}</a>
+                        <a href="{% url 'members:show_profile_page' post.author.profile.id %}">{{ post.author.username }}</a>
                     {% else %}
                         {{ post.author.username }}
                     {% endif %}</p>

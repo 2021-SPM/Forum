@@ -22,7 +22,9 @@ class Tag(models.Model):
 class Profile(models.Model):
     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
     bio = models.TextField(blank=True, null=True)
-    profile_pic = models.ImageField(blank=True, null=True, upload_to='static/profile/')
+    profile_pic = models.ImageField(blank=True,
+                                    null=True,
+                                    upload_to='static/profile/')
     website_url = models.URLField(max_length=255, blank=True, null=True)
     weibo_url = models.URLField(max_length=255, blank=True, null=True)
     twitter_url = models.URLField(max_length=255, blank=True, null=True)
@@ -31,12 +33,14 @@ class Profile(models.Model):
         return str(self.user)
 
     def get_absolute_url(self):
-        return reverse('home')
+        return reverse('myblog:home')
 
 
 class Post(models.Model):
     title = models.CharField(max_length=255)
-    header_image = models.ImageField(blank=True, null=True, upload_to='article/%Y%m%d/')
+    header_image = models.ImageField(blank=True,
+                                     null=True,
+                                     upload_to='article/%Y%m%d/')
     snippet = models.CharField(max_length=255, blank=True, null=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     body = RichTextField(blank=True, null=True)
@@ -58,7 +62,7 @@ class Post(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('article_detail', args=(str(self.id)))
+        return reverse('myblog:article_detail', args=[self.id])
 
     def save(self, *args, **kwargs):
         self.modified_date = timezone.now()

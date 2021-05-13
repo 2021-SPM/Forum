@@ -22,12 +22,10 @@ def comment(request, post_pk):
                              '评论发表成功！',
                              extra_tags='success')
         if request.user != comment.post.author:
-            notify.send(
-                request.user,
-                recipient=comment.post.author,
-                verb='评论了你',
-                target=comment.post
-            )
+            notify.send(request.user,
+                        recipient=comment.post.author,
+                        verb='评论了你',
+                        target=comment.post)
         return redirect(post)
     context = {
         'post': post,

@@ -65,20 +65,20 @@ class AddPostView(CreateView):
     model = Post
     form_class = PostForm
     template_name = 'add_post.html'
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('myblog:home')
 
 
 class UpdatePostView(UpdateView):
     model = Post
     form_class = EditForm
     template_name = 'update_post.html'
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('myblog:home')
 
 
 class DeletePostView(DeleteView):
     model = Post
     template_name = 'delete_post.html'
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('myblog:home')
 
 
 class CategoryView(ListView):
@@ -95,7 +95,7 @@ class AddCatView(CreateView):
     model = Category
     form_class = CatForm
     template_name = 'add_cat.html'
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('myblog:home')
 
 
 def LikeView(request, pk):
@@ -107,7 +107,7 @@ def LikeView(request, pk):
     else:
         post.likes.add(request.user)
         liked = True
-    return HttpResponseRedirect(reverse_lazy('article_detail', args=[str(pk)]))
+    return HttpResponseRedirect(reverse_lazy('myblog:article_detail', args=[str(pk)]))
 
 
 def search(request):
@@ -115,7 +115,7 @@ def search(request):
 
     if not q:
         messages.add_message(request, messages.ERROR, "😱，搜索出错惹", extra_tags='danger')
-        return redirect('home')
+        return redirect('myblog:home')
     post_list = Post.objects.filter(Q(title__icontains=q) | Q(body__icontains=q) | Q(author__username__icontains=q))
     messages.add_message(request, messages.SUCCESS, "φ(゜▽゜*)♪", extra_tags='success')
     return render(request, 'home.html', {'post_list': post_list})

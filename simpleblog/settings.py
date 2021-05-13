@@ -123,9 +123,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 MEDIA_ROOT = BASE_DIR / "media"
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    BASE_DIR / "static",
-]
+STATIC_ROOT = BASE_DIR / "static"
 
-LOGIN_REDIRECT_URL = 'home'
-LOGOUT_REDIRECT_URL = 'home'
+# STATICFILES_DIRS = [
+#     BASE_DIR / "static",
+# ]
+
+LOGIN_REDIRECT_URL = 'myblog:home'
+LOGOUT_REDIRECT_URL = 'myblog:home'
