@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm, PasswordChangeForm
 from django.contrib.auth.models import User
 
-from myblog.models import Profile
+from forum.models import Profile
 
 
 class SignUpForm(UserCreationForm):

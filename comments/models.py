@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
 
-from myblog.models import Post
+from forum.models import Post
 
 
 class Comment(models.Model):

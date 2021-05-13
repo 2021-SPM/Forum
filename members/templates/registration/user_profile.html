@@ -8,7 +8,7 @@
                 {% if  page_user.profile_pic %}
                     <img src="{{ page_user.profile_pic.url }}" class="rounded-circle">
                 {% else %}
-                    <img src="{% static 'myblog/images/default_profile.png' %}">
+                    <img src="{% static 'forum/images/default_profile.png' %}">
                 {% endif %}
             </div>
             <div class="col-md-8">
@@ -39,7 +39,7 @@
             {% for post in posts %}
                 <div class="card mb-3">
                     <div class="card-body">
-                        <a href="{% url 'myblog:article_detail' post.pk %}"><h4 class="card-title">{{ post.title }}</h4></a>
+                        <a href="{% url 'forum:article_detail' post.pk %}"><h4 class="card-title">{{ post.title }}</h4></a>
 
                         <p class="card-text">{% if post.author.profile.id %}
                             <a href="{% url 'members:show_profile_page' post.author.profile.id %}">{{ post.author.username }}</a>

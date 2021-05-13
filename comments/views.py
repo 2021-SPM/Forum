@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
 from notifications.signals import notify
 
-from myblog.models import Post
+from forum.models import Post
 from .forms import CommentForm
 
 

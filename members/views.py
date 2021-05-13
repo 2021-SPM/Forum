@@ -4,7 +4,7 @@ from django.urls import reverse_lazy
 from django.views import generic
 from django.views.generic import DetailView, CreateView
 
-from myblog.models import Profile, Post
+from forum.models import Profile, Post
 from .forms import SignUpForm, EditProfileForm, PasswordChangingForm, ProfilePageForm
 
 
@@ -18,7 +18,7 @@ class UserRegisterView(generic.CreateView):
 class UserEditView(generic.UpdateView):
     form_class = EditProfileForm
     template_name = 'registration/edit_profile.html'
-    success_url = reverse_lazy('myblog:home')
+    success_url = reverse_lazy('forum:home')
 
     def get_object(self, queryset=None):
         return self.request.user
@@ -27,7 +27,7 @@ class UserEditView(generic.UpdateView):
 class PasswordsChangeView(PasswordChangeView):
     # form_class = PasswordChangeForm
     form_class = PasswordChangingForm
-    # success_url = reverse_lazy('myblog:home')
+    # success_url = reverse_lazy('forum:home')
     success_url = reverse_lazy('password_success')
 
 
@@ -53,14 +53,14 @@ class EditProfilePageView(generic.UpdateView):
     model = Profile
     template_name = 'registration/edit_profile_page.html'
     form_class = ProfilePageForm
-    success_url = reverse_lazy('myblog:home')
+    success_url = reverse_lazy('forum:home')
 
 
 class CreateProfilePageView(CreateView):
     model = Profile
     template_name = 'registration/create_user_profile_page.html'
     form_class = ProfilePageForm
-    success_url = reverse_lazy('myblog:home')
+    success_url = reverse_lazy('forum:home')
 
     def form_valid(self, form):
         form.instance.user = self.request.user

@@ -11,7 +11,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('myblog', '0001_initial'),
+        ('forum', '0001_initial'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
@@ -23,7 +23,7 @@ class Migration(migrations.Migration):
                 ('text', models.TextField()),
                 ('created_time', models.DateTimeField(default=django.utils.timezone.now)),
                 ('commentator', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL, verbose_name='username')),
-                ('post', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='myblog.post', verbose_name='post')),
+                ('post', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='forum.post', verbose_name='post')),
             ],
             options={
                 'verbose_name': 'comments',
