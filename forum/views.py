@@ -114,9 +114,12 @@ def search(request):
     q = request.GET.get('q')
 
     if not q:
-        messages.add_message(request, messages.ERROR, "😱，搜索出错惹", extra_tags='danger')
+        messages.add_message(request, messages.ERROR, "😱，mistakes", extra_tags='danger')
         return redirect('forum:home')
     post_list = Post.objects.filter(Q(title__icontains=q) | Q(body__icontains=q) | Q(author__username__icontains=q))
+    if not post_list:
+        messages.add_message(request, messages.ERROR, "😥，Nothing", extra_tags='danger')
+        return redirect('forum:home')
     messages.add_message(request, messages.SUCCESS, "φ(゜▽゜*)♪", extra_tags='success')
     return render(request, 'home.html', {'post_list': post_list})
 

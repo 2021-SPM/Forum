@@ -131,3 +131,12 @@ STATICFILES_DIRS = [
 
 LOGIN_REDIRECT_URL = 'forum:home'
 LOGOUT_REDIRECT_URL = 'forum:home'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.163.com'  # smtp 地址（这里需要注意，如果你和我一样使用 163 邮箱的话，默认 smtp 功能是关闭的，需要去设置开启，并生成一个一次性密码用于连接 smtp 服务）
+EMAIL_HOST_USER = 'onlineforum@163.com'  # 用户
+EMAIL_HOST_PASSWORD = 'UXELTUUILNZEHNTE'  # 密码
+EMAIL_SUBJECT_PREFIX = u'[论坛消息通知]'  # 为邮件Subject-line前缀,默认是'[django]'
+EMAIL_USE_SSL = True  # 与SMTP服务器通信时，是否启动TLS链接(安全链接)。默认是false
+EMAIL_PORT = 465
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

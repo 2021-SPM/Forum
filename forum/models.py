@@ -50,10 +50,14 @@ class Post(models.Model):
     views = models.PositiveIntegerField(default=0)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     tags = models.ManyToManyField(Tag, blank=True)
+    emailNotice = models.BooleanField(default=True)
 
     def increase_views(self):
         self.views += 1
         self.save(update_fields=['views'])
+
+    # def isSendnotice(self):
+    #     self.emailNotice = -self.emailNotice
 
     def total_like(self):
         return self.likes.count()

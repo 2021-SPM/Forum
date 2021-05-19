@@ -15,7 +15,6 @@ class CommentNoticeListView(LoginRequiredMixin, ListView):
 
 
 class CommentNoticeUpdateView(View):
-
     def get(self, request):
 
         notice_id = request.GET.get('notice_id')
